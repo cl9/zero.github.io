@@ -1,0 +1,2170 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/webor2006/article/details/119793166"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#"> 
+  <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>Kotlin x Java打造 UI 通用组件＜二＞-------通用UI组件开发与基础框架设计二_kotlinjavaui-CSDN博客</title>  
+  <meta name="keywords" content="kotlinjavaui"> 
+  <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;kotlinjavaui&quot;}"> 
+  <meta name="description" content="文章浏览阅读308次。本文介绍了使用Kotlin和Java混合编程创建Android电商App基础框架的过程，包括创建主工程、添加依赖、构建通用UI组件等。详细讲解了如何基于HiTabBottom实现底部导航，通过封装Tab与Fragment管理器，解决切换Fragment时的界面错乱问题，并设计实现了HiTabTop自动滚动功能。
+"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-70ceae5dd0.min.css"> 
+  <style>
+        #content_views{
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none; 
+            user-select: none; 
+        }
+    </style>  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-whitemove/skin-whitemove-2af9149bdc.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>    
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">Kotlin x Java打造 UI 通用组件＜二＞-------通用UI组件开发与基础框架设计二</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a class="follow-nickName " href="https://blog.csdn.net/webor2006" target="_blank" rel="noopener" title="webor2006">webor2006</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2022-08-16 13:44:51&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量308</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 1 </span> </a> 
+            <div class="read-count-box is-like"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/webor2006/category_11294469.html" target="_blank" rel="noopener">android架构综合实操</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;java&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;java\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;java&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;java\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=java&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank">java</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;android&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;android\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;android&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;android\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=android&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank">android</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;kotlin&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;kotlin\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;kotlin&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;kotlin\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=kotlin&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank">kotlin</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2021-08-19 07:33:23&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/webor2006/article/details/119793166" target="_blank">https://blog.csdn.net/webor2006/article/details/119793166</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert"></div> 
+      <div id="blogColumnPayAdvert"> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/webor2006/category_11294469.html" target="_blank" title="android架构综合实操" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://img-blog.csdnimg.cn/20190927151026427.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">android架构综合实操</span> <span class="dec">专栏收录该内容</span> </span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>84 篇文章</span> 
+          <span>8 订阅</span> 
+          <span class="old-add-new-box"> <span class="price">¥69.90</span> <span class="oldprice">¥99.00</span> </span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-subscribe">已订阅 </a> 
+          <a class="item-target column-studyvip-discount column-studyvip-pass" data-report-view="{&quot;spm&quot;:&quot;1001.2015.3001.8590&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2015.3001.8590&quot;}">8折续费 </a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="learning_the_member_box"> 
+       <a href="https://www.csdn.net/vip?utm_source=bkzl_cjhy_ckqy" target="_blank"> 
+        <div class="left">
+         <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconVIpCrown.png" alt="">
+         <span>您已是超级会员，正在免费阅读会员专享内容</span>
+        </div> 
+        <div class="right">
+         <span>查看更多超级会员权益</span>
+         <img src="https://csdnimg.cn/release/blogv2/dist/components/img/vipIconArrowLeftWhite.png" alt="">
+        </div> </a> 
+      </div> 
+      <div class="ai-abstract-box"> 
+       <div class="ai-abstract"> 
+        <div class="abstract-content"> 
+         <img class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png" alt=""> 本文介绍了使用Kotlin和Java混合编程创建Android电商App基础框架的过程，包括创建主工程、添加依赖、构建通用UI组件等。详细讲解了如何基于HiTabBottom实现底部导航，通过封装Tab与Fragment管理器，解决切换Fragment时的界面错乱问题，并设计实现了HiTabTop自动滚动功能。 
+        </div> 
+        <span>摘要由CSDN通过智能技术生成</span> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views"> 
+         <h2>App基础框架设计：</h2> 
+         <p>由于咱们已经实现好了HiTabBottom这个组件了，所以接下来则可以来用它来先搭建咱们要做的电商APP的主界面的框架了，也就是：</p> 
+         <p style="text-align:center;"><img alt="" height="676" src="https://i-blog.csdnimg.cn/blog_migrate/42c5987148c572fdbfe11cd98d516b74.png" width="312"></p> 
+         <h3>架构初览：</h3> 
+         <p>目前算是咱们第一次来搭建项目的基础框架，当然目前的架构也比较简单，这里先来看一下架构图：</p> 
+         <p style="text-align:center;"><img alt="" height="399" src="https://i-blog.csdnimg.cn/blog_migrate/9b992c72f3264456a6d0fcff7c83fdb1.png" width="645"></p> 
+         <p>上面这图在下面的实现中再来细细体会其整人架构的思想。</p> 
+         <h3>具体实现：</h3> 
+         <h4>创建主工程：</h4> 
+         <p>这里又得创建一个全新的工程了，之前的hi-library、hi-ui全是组件库，话不多说，走起：</p> 
+         <p style="text-align:center;"><img alt="" height="418" src="https://i-blog.csdnimg.cn/blog_migrate/9644e55c7a3362b455e6aaccce38d2ba.png" width="404"></p> 
+         <p>目前来看一下此时咱们已经建立的本地目录结构：</p> 
+         <p style="text-align:center;"><img alt="" height="90" src="https://i-blog.csdnimg.cn/blog_migrate/5d8c934b5c5fc3d846c047cdc6819296.png" width="236"></p> 
+         <p>其实都是单独的Android Studio的工程，为啥要这么搞呢，待之后随着项目的不断深入再来思考它。&nbsp;</p> 
+         <h4>添加依赖：</h4> 
+         <p>接下来添加咱们已经实现完了的hi-library、hi-ui库，依赖方式跟上一次hi-ui依赖hi-library一样：</p> 
+         <p style="text-align:center;"><img alt="" height="380" src="https://i-blog.csdnimg.cn/blog_migrate/10db8f69ee3edd8fbb84fed25a08cc5a.png" width="734"></p> 
+         <p>然后主工程依赖于这俩导进来的库：</p> 
+         <p style="text-align:center;"><img alt="" height="289" src="https://i-blog.csdnimg.cn/blog_migrate/cdec979c240c2279fde10d1a18fee839.png" width="680"></p> 
+         <p>这里将生成的MainActivity给删掉，改用Java版本的，为啥一个工程里又有Kotlin又有Java，这是为了模拟真实大型项目可能存在的情况，如今现实就可能会是Kotlin与Java混编，所以这个混编的技能是很有必要要掌握的:</p> 
+         <p style="text-align:center;"><img alt="" height="245" src="https://i-blog.csdnimg.cn/blog_migrate/77696dce3a187869b72d5b65c648aca7.png" width="640"></p> 
+         <h4>创建common模块：</h4> 
+         <p style="text-align:center;"><img alt="" height="370" src="https://i-blog.csdnimg.cn/blog_migrate/0aad4b7d18cc17a635af99da415c4bac.png" width="603"></p> 
+         <p>这个模块主要是项目中一些公共的资源，像一些Base类呀都可以放里面，下面来创建一下：</p> 
+         <p style="text-align:center;"><img alt="" height="459" src="https://i-blog.csdnimg.cn/blog_migrate/95783b6faeab0cf6802bd68dcb3a3622.png" width="466"></p> 
+         <p>然后将app依赖于它：</p> 
+         <p style="text-align:center;"><img alt="" height="177" src="https://i-blog.csdnimg.cn/blog_migrate/1aaa60690639b17b012ddb2c891fbc2a.png" width="511"></p> 
+         <h4>增加ui.component：</h4> 
+         <p style="text-align:center;"><img alt="" height="344" src="https://i-blog.csdnimg.cn/blog_migrate/403462a78bdba3a7c7ce95fe3815e283.png" width="556"></p> 
+         <p><strong>HiBaseActionInterface：</strong></p> 
+         <p style="text-align:center;"><img alt="" height="283" src="https://i-blog.csdnimg.cn/blog_migrate/ee755afd0e96e5714962d3a618db3ff1.png" width="696"></p> 
+         <p>此处先占个位，待未来再慢慢扩展。</p> 
+         <p><strong>HiBaseActivity：</strong></p> 
+         <p style="text-align:center;"><img alt="" height="238" src="https://i-blog.csdnimg.cn/blog_migrate/8da566b7f68c86f8ee89570165fcf39f.png" width="409"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.common.ui.component;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class HiBaseActivity extends AppCompatActivity implements HiBaseActionInterface {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void showToast(String message) {
+        if (TextUtils.isEmpty(message)) return;
+        Toast.makeText(
+                this,
+                message,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+}</code ></pre> 
+         <p><strong>HiBaseApplication：</strong></p> 
+         <p style="text-align:center;"><img alt="" height="287" src="https://i-blog.csdnimg.cn/blog_migrate/305a929c16158cc1b98a64222f1c201a.png" width="670"></p> 
+         <p><strong>HiBaseFragment：</strong></p> 
+         <p style="text-align:center;"><img alt="" height="381" src="https://i-blog.csdnimg.cn/blog_migrate/033039a309ad473b4e2d7cbcdb70ea98.png" width="400"></p> 
+         <p>里面也简单实现一下：</p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.common.ui.component;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public abstract class HiBaseFragment extends Fragment {
+    protected View layoutView;
+
+    @LayoutRes
+    public abstract int getLayoutId();
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        layoutView = inflater.inflate(getLayoutId(), container, false);
+        return layoutView;
+    }
+}</code ></pre> 
+         <p>然后让主工程的Activity和Application来继承一下咱们的Base：</p> 
+         <p style="text-align:center;"><img alt="" height="251" src="https://i-blog.csdnimg.cn/blog_migrate/7dd3c66d54c8fb1c2d3c9b842a8bdc4e.png" width="473"></p> 
+         <p style="text-align:center;"><img alt="" height="236" src="https://i-blog.csdnimg.cn/blog_migrate/c7f39d8e5bacba56b5b2764b387d834d.png" width="742"></p> 
+         <p style="text-align:center;"><img alt="" height="171" src="https://i-blog.csdnimg.cn/blog_migrate/bb9b00efbd661790ee1f2a6ca1239260.png" width="380"></p> 
+         <h2>基于HiTabBottom实现App底部导航框架：</h2> 
+         <h3>Tab与Fragment管理器封装：</h3> 
+         <p style="text-align:center;"><img alt="" height="385" src="https://i-blog.csdnimg.cn/blog_migrate/6ca106433daa971daea99b9ed5d4f93a.png" width="626"></p> 
+         <h4>HiTabViewAdpater：</h4> 
+         <p>其实它是仿照ViewPagerAdapter的效果来实现对于我们的Fragment提供类似ViewApdater的功能，下面来创建一下：</p> 
+         <p style="text-align:center;"><img alt="" height="242" src="https://i-blog.csdnimg.cn/blog_migrate/54f39131f69192e196d8db7cd6119332.png" width="355"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.common.tab;
+
+import android.view.View;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import org.devio.hi.ui.tab.bottom.HiTabBottomInfo;
+
+import java.util.List;
+
+public class HiTabViewAdapter {
+
+    private List&lt;HiTabBottomInfo&lt;?&gt;&gt; mInfoList;
+    private Fragment mCurFragment;
+    private FragmentManager mFragmentManager;
+
+    public HiTabViewAdapter(FragmentManager fragmentManager, List&lt;HiTabBottomInfo&lt;?&gt;&gt; infoList) {
+        this.mFragmentManager = fragmentManager;
+        this.mInfoList = infoList;
+    }
+
+    /**
+     * 实例化以及指定位置的Fragment
+     */
+    public void instantiateItem(View container, int position) {
+        FragmentTransaction mCurTransaction = mFragmentManager.beginTransaction();
+        if (mCurFragment != null) {
+            mCurTransaction.hide(mCurFragment);
+        }
+        String name = container.getId() + ":" + position;
+        Fragment fragment = mFragmentManager.findFragmentByTag(name);
+        if (fragment != null) {
+            mCurTransaction.show(fragment);
+        } else {
+            fragment = getItem(position);
+            if (!fragment.isAdded()) {
+                mCurTransaction.add(container.getId(), fragment, name);
+            }
+        }
+        mCurFragment = fragment;
+        mCurTransaction.commitNowAllowingStateLoss();
+    }
+
+    public Fragment getCurrentFragment() {
+        return mCurFragment;
+    }
+
+    public int getCount() {
+        return mInfoList == null ? 0 : mInfoList.size();
+    }
+
+    public Fragment getItem(int position) {
+        //TODO
+        return null;
+    }
+
+}</code ></pre> 
+         <p>其中它需要用到hi-ui的实体，所以此时需要更改一下依赖关系：</p> 
+         <p style="text-align:center;"><img alt="" height="166" src="https://i-blog.csdnimg.cn/blog_migrate/dc88dc780233b9a5ad524a4d1496bfb0.png" width="635"></p> 
+         <p style="text-align:center;"><img alt="" height="185" src="https://i-blog.csdnimg.cn/blog_migrate/b82b27dad36f5a8d657f61e740625d88.png" width="587"></p> 
+         <p style="text-align:center;"><img alt="" height="211" src="https://i-blog.csdnimg.cn/blog_migrate/8bb8845b7ac925048ceb622c47772dcb.png" width="586"></p> 
+         <p>接下来还剩最后一个方法木有实现：</p> 
+         <p style="text-align:center;"><img alt="" height="210" src="https://i-blog.csdnimg.cn/blog_migrate/a7b1b0c2c2dd90611c6690ecb99d8cdd.png" width="473"></p> 
+         <p>此时实现逻辑为：</p> 
+         <p style="text-align:center;"><img alt="" height="191" src="https://i-blog.csdnimg.cn/blog_migrate/ce40ed380db64ee4c0035f894c768c21.png" width="467"></p> 
+         <p>需要在Tab实体中增加一个属性了：</p> 
+         <p style="text-align:center;"><img alt="" height="239" src="https://i-blog.csdnimg.cn/blog_migrate/18ddbe40515df55d4a53be5d09455ca8.png" width="608"></p> 
+         <h4>HiFragmentTabView：</h4> 
+         <p>直接上代码，代码上有注释，对于这个类的作用：</p> 
+         <p style="text-align:center;"><img alt="" height="208" src="https://i-blog.csdnimg.cn/blog_migrate/1aa293ecdaed414e539758ff6d43b103.png" width="322"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.common.tab;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.FrameLayout;
+
+import androidx.fragment.app.Fragment;
+
+/**
+ * 1.将Fragment的操作内聚
+ * 2.提供通用的一些API
+ */
+public class HiFragmentTabView extends FrameLayout {
+
+    private HiTabViewAdapter mAdapter;
+    private int currentPosition;
+
+    public HiFragmentTabView(Context context) {
+        super(context);
+    }
+
+    public HiFragmentTabView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public HiFragmentTabView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public HiTabViewAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public void setAdapter(HiTabViewAdapter adapter) {
+        if (this.mAdapter != null || adapter == null) {
+            return;
+        }
+        this.mAdapter = adapter;
+        currentPosition = -1;
+    }
+
+    public void setCurrentItem(int position) {
+        if (position &lt; 0 || position &gt;= mAdapter.getCount()) {
+            return;
+        }
+        if (currentPosition != position) {
+            currentPosition = position;
+            mAdapter.instantiateItem(this, position);
+        }
+    }
+
+
+    public int getCurrentItem() {
+        return currentPosition;
+    }
+
+    public Fragment getCurrentFragment() {
+        if (this.mAdapter == null) {
+            throw new IllegalArgumentException("please call setAdapter first.");
+        }
+        return mAdapter.getCurrentFragment();
+    }
+}</code ></pre> 
+         <p>要提前明白，这个View是指这块位置哈：</p> 
+         <p style="text-align:center;"><img alt="" height="576" src="https://i-blog.csdnimg.cn/blog_migrate/87fb32d1fb23c3f6eb9cfdc955f93d86.png" width="282"></p> 
+         <h3>实现App底部导航：</h3> 
+         <h4>创建Fragments：</h4> 
+         <p style="text-align:center;"><img alt="" height="715" src="https://i-blog.csdnimg.cn/blog_migrate/0eebb7904c03e972e26aa2353a24584e.png" width="382"></p> 
+         <p>其代码和布局很简单，以其中一个贴出来，其它的雷同就不一一贴了：</p> 
+         <pre><code class="language-java">package org.devio.as.proj.main.fragment;
+
+import org.devio.as.proj.common.ui.component.HiBaseFragment;
+import org.devio.as.proj.main.R;
+
+public class HoemPageFragment extends HiBaseFragment {
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_home;
+    }
+}</code ></pre> 
+         <pre><code  style="height: 50vh;" class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+
+    &lt;TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HomePage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /&gt;
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</code ></pre> 
+         <h4>在Activity中实现Tab的切换Fragment的效果：</h4> 
+         <p><strong>1、在MainActivity中进行布局的定义：</strong></p> 
+         <p style="text-align:center;"><img alt="" height="253" src="https://i-blog.csdnimg.cn/blog_migrate/f80ee2bd520deb3f93b8eacf642f6e94.png" width="653"></p> 
+         <p><strong>2、给Activity定义一个逻辑类：</strong></p> 
+         <p>由于随着业务的不断递增MainActivity的代码量也会不断的膨胀，最终可能会导致这个类中有成千上万行代码，不易于扩展维护，可能说到这第一时间想到了用MVP架构，但是目前咱们先不考虑用MVP的方式，采用抽离一个逻辑类来解决，也就是将一些业务都抽离到逻辑类当中，这样保证Activity代码的清爽也提升维护性，下面来新建一个：</p> 
+         <p style="text-align:center;"><img alt="" height="203" src="https://i-blog.csdnimg.cn/blog_migrate/781353b6f01fc23c8736a204e2667770.png" width="279"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.main.logic;
+
+import android.content.res.Resources;
+import android.view.View;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.FragmentManager;
+
+import org.devio.as.proj.common.tab.HiFragmentTabView;
+import org.devio.hi.ui.tab.bottom.HiTabBottomInfo;
+import org.devio.hi.ui.tab.bottom.HiTabBottomLayout;
+
+import java.util.List;
+
+/**
+ * 将MainActivity的一些逻辑内聚在这，让MainActivity更加清爽
+ */
+public class MainActivityLogic {
+    private HiFragmentTabView fragmentTabView;
+    private HiTabBottomLayout hiTabBottomLayout;
+    private List&lt;HiTabBottomInfo&lt;?&gt;&gt; infoList;
+    private ActivityProvider activityProvider;
+    private int currentItemIndex;
+
+    /**
+     * 这个是Activity必须要具备的功能接口
+     */
+    public interface ActivityProvider {
+        &lt;T extends View&gt; T findViewById(@IdRes int id);
+
+        Resources getResources();
+
+        FragmentManager getSupportFragmentManager();
+
+        String getString(@StringRes int resId);
+    }
+
+}</code ></pre> 
+         <p>然后提供一个构造：</p> 
+         <p style="text-align:center;"><img alt="" height="246" src="https://i-blog.csdnimg.cn/blog_migrate/ff262a0a6fac757baf0676554ccddee9.png" width="466"></p> 
+         <p>此时就可以在Activity中来初始化它了：</p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.main;
+
+import android.os.Bundle;
+
+import org.devio.as.proj.common.ui.component.HiBaseActivity;
+import org.devio.as.proj.main.logic.MainActivityLogic;
+
+public class MainActivity extends HiBaseActivity implements MainActivityLogic.ActivityProvider {
+
+    private MainActivityLogic activityLogic;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        activityLogic = new MainActivityLogic(this);
+    }
+}</code ></pre> 
+         <p>但是有个很神奇的东西，我们实现了接口为啥木有提示要重写呢？因为咱们定义的这些provider的方法都是Activity中的通用系统方法，所以不需要咱们手动再来实现了。</p> 
+         <p><strong>3、完成TabBottom的初始化：</strong></p> 
+         <p>当然还是在逻辑类当中来初始化喽：</p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.as.proj.main.logic;
+
+import android.content.res.Resources;
+import android.view.View;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.FragmentManager;
+
+import org.devio.as.proj.common.tab.HiFragmentTabView;
+import org.devio.as.proj.common.tab.HiTabViewAdapter;
+import org.devio.as.proj.main.R;
+import org.devio.as.proj.main.fragment.CategoryFragment;
+import org.devio.as.proj.main.fragment.FavoriteFragment;
+import org.devio.as.proj.main.fragment.HoemPageFragment;
+import org.devio.as.proj.main.fragment.ProfileFragment;
+import org.devio.as.proj.main.fragment.RecommendFragment;
+import org.devio.hi.ui.tab.bottom.HiTabBottomInfo;
+import org.devio.hi.ui.tab.bottom.HiTabBottomLayout;
+import org.devio.hi.ui.tab.common.IHiTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 将MainActivity的一些逻辑内聚在这，让MainActivity更加清爽
+ */
+public class MainActivityLogic {
+    private HiFragmentTabView fragmentTabView;
+    private HiTabBottomLayout hiTabBottomLayout;
+    private List&lt;HiTabBottomInfo&lt;?&gt;&gt; infoList;
+    private ActivityProvider activityProvider;
+    private int currentItemIndex;
+
+    public MainActivityLogic(ActivityProvider activityProvider) {
+        this.activityProvider = activityProvider;
+        initTabBottom();
+    }
+
+    private void initTabBottom() {
+        hiTabBottomLayout = activityProvider.findViewById(R.id.tab_bottom_layout);
+        hiTabBottomLayout.setTabAlpha(0.85f);
+        infoList = new ArrayList&lt;&gt;();
+        int defaultColor = activityProvider.getResources().getColor(R.color.tabBottomDefaultColor);
+        int tintColor = activityProvider.getResources().getColor(R.color.tabBottomTintColor);
+        HiTabBottomInfo homeInfo = new HiTabBottomInfo&lt;Integer&gt;(
+                "首页",
+                "fonts/iconfont.ttf",
+                activityProvider.getString(R.string.if_home),
+                null,
+                defaultColor,
+                tintColor
+        );
+        homeInfo.fragment = HoemPageFragment.class;
+        HiTabBottomInfo infoFavorite = new HiTabBottomInfo&lt;Integer&gt;(
+                "收藏",
+                "fonts/iconfont.ttf",
+                activityProvider.getString(R.string.if_favorite),
+                null,
+                defaultColor,
+                tintColor
+        );
+        infoFavorite.fragment = FavoriteFragment.class;
+        HiTabBottomInfo infoCategory = new HiTabBottomInfo&lt;Integer&gt;(
+                "分类",
+                "fonts/iconfont.ttf",
+                activityProvider.getString(R.string.if_category),
+                null,
+                defaultColor,
+                tintColor
+        );
+        infoCategory.fragment = CategoryFragment.class;
+        HiTabBottomInfo infoRecommend = new HiTabBottomInfo&lt;Integer&gt;(
+                "推荐",
+                "fonts/iconfont.ttf",
+                activityProvider.getString(R.string.if_recommend),
+                null,
+                defaultColor,
+                tintColor
+        );
+        infoRecommend.fragment = RecommendFragment.class;
+        HiTabBottomInfo infoProfile = new HiTabBottomInfo&lt;Integer&gt;(
+                "我的",
+                "fonts/iconfont.ttf",
+                activityProvider.getString(R.string.if_profile),
+                null,
+                defaultColor,
+                tintColor
+        );
+        infoProfile.fragment = ProfileFragment.class;
+        infoList.add(homeInfo);
+        infoList.add(infoFavorite);
+        infoList.add(infoCategory);
+        infoList.add(infoRecommend);
+        infoList.add(infoProfile);
+        hiTabBottomLayout.inflateInfo(infoList);
+        initFragmentTabView();
+        hiTabBottomLayout.addTabSelectedChangeListener(new IHiTabLayout.OnTabSelectedListener&lt;HiTabBottomInfo&lt;?&gt;&gt;() {
+            @Override
+            public void onTabSelectedChange(int index, @Nullable HiTabBottomInfo&lt;?&gt; prevInfo, @NonNull HiTabBottomInfo&lt;?&gt; nextInfo) {
+                fragmentTabView.setCurrentItem(index);
+                MainActivityLogic.this.currentItemIndex = index;
+            }
+        });
+        hiTabBottomLayout.defaultSelected(infoList.get(currentItemIndex));
+    }
+
+    private void initFragmentTabView() {
+        HiTabViewAdapter tabViewAdapter = new HiTabViewAdapter(activityProvider.getSupportFragmentManager(), infoList);
+        fragmentTabView = activityProvider.findViewById(R.id.fragment_tab_view);
+        fragmentTabView.setAdapter(tabViewAdapter);
+    }
+
+    /**
+     * 这个是Activity必须要具备的功能接口
+     */
+    public interface ActivityProvider {
+        &lt;T extends View&gt; T findViewById(@IdRes int id);
+
+        Resources getResources();
+
+        FragmentManager getSupportFragmentManager();
+
+        String getString(@StringRes int resId);
+    }
+
+}</code ></pre> 
+         <p>此时需要将iconfont拷到app的assets目录来：</p> 
+         <p style="text-align:center;"><img alt="" height="269" src="https://i-blog.csdnimg.cn/blog_migrate/e699a1f07a8d2198f7354d5035dd3430.png" width="276"></p> 
+         <p>然后再将相关的图标给引到strings.xml当中来：</p> 
+         <pre><code class="language-XML">&lt;resources&gt;
+    &lt;string name="app_name"&gt;Asproj&lt;/string&gt;
+    &lt;string name="if_home"&gt;&amp;#xe8c6;&lt;/string&gt;
+    &lt;string name="if_recommend"&gt;&amp;#xe63f;&lt;/string&gt;
+    &lt;string name="if_chat"&gt;&amp;#xe63c;&lt;/string&gt;
+    &lt;string name="if_profile"&gt;&amp;#xe634;&lt;/string&gt;
+    &lt;string name="if_category"&gt;&amp;#xe600;&lt;/string&gt;
+    &lt;string name="if_favorite"&gt;&amp;#xe639;&lt;/string&gt;
+    &lt;string name="if_favorite1"&gt;&amp;#xe620;&lt;/string&gt;
+&lt;/resources&gt;</code ></pre> 
+         <p>然后还用到了两个色值：</p> 
+         <p style="text-align:center;"><img alt="" height="195" src="https://i-blog.csdnimg.cn/blog_migrate/18f9c8073649f4aab4f019105fa6291f.png" width="672"></p> 
+         <p style="text-align:center;"><img alt="" height="284" src="https://i-blog.csdnimg.cn/blog_migrate/100cc39a214e7c974f5114ce17c22287.png" width="663"></p> 
+         <p><strong>4、运行：</strong></p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/e126ab6de95bc126abc5c698c6bba5a5.gif"></p> 
+         <h2>Fragment常见问题解决：</h2> 
+         <h3>现象说明：</h3> 
+         <p>这个问题可能不一定你遇到过，但是这个问题是值得一提的，它的问题的产生是跟开发者的这个选项有关：</p> 
+         <p style="text-align:center;"><img alt="" height="737" src="https://i-blog.csdnimg.cn/blog_migrate/978f93555d652cfa459e49e388951c60.png" width="360"></p> 
+         <p>此时对于咱们有Fragment的页面就会出现如下问题了：</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/8b85923a932e5e3a02b834319c3d3b49.gif"></p> 
+         <p>看到木有，整个Activity重新创建了，但是貌似之前咱们创建的Fragment还保留着，导致界面错乱了。。</p> 
+         <h3>Bug解决：</h3> 
+         <p>那这个Bug其实造成的原因就是当我们将Activity切出去之后则会销毁，而再回来是整个Activity又重新创建了，下面debug看一下就知道了：</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/ada704442db5ae2c9e0fa4a377a00971.gif"></p> 
+         <p>可以看到，再切回来则又重新走了Activity.onCreate()方法了，而且此时savedInstanceState参数不为null了：</p> 
+         <p style="text-align:center;"><img alt="" height="194" src="https://i-blog.csdnimg.cn/blog_migrate/b6ac62e9c74e5c94bdc65bf83956bb0a.png" width="837"></p> 
+         <p style="text-align:center;"><img alt="" height="315" src="https://i-blog.csdnimg.cn/blog_migrate/0fd87a0ecc4c1a4a38f9203f40f7c87c.png" width="731"></p> 
+         <p>所以这种情况处理也比较简单，在学Activity的异常退出状态保存其实都学过，就是在退出之前将当前Fragment的index给保留一下，然后再在onCreate中将其index还原，具体如下：</p> 
+         <p style="text-align:center;"><img alt="" height="310" src="https://i-blog.csdnimg.cn/blog_migrate/2c3c98c03e2e6cde4f804b6a6f399b61.png" width="616"></p> 
+         <p style="text-align:center;"><img alt="" height="380" src="https://i-blog.csdnimg.cn/blog_migrate/edd418a4bf6537b0cd2880864c97a01c.png" width="559"></p> 
+         <p>然后还原状态处理：</p> 
+         <p style="text-align:center;"><img alt="" height="250" src="https://i-blog.csdnimg.cn/blog_migrate/f8f30d2d83ea7cef4c85fedda925d6ca.png" width="572"></p> 
+         <p style="text-align:center;"><img alt="" height="342" src="https://i-blog.csdnimg.cn/blog_migrate/54a5e040f8ad29e54aab92d5f2ecf3c4.png" width="647"></p> 
+         <p>这样就可以修复了，下面来试一下：</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/9ee040ab1711b47d147701d903d174eb.gif"></p> 
+         <h2>HiTabTop架构设计与功能实现：</h2> 
+         <p>在首页中有这么一个滑动Tab的控件：</p> 
+         <p style="text-align:center;"><img alt="" height="744" src="https://i-blog.csdnimg.cn/blog_migrate/cbe916f78f35e78ad93c6228ad2e6438.png" width="350"></p> 
+         <p>它的动效如下：</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/a063078e55f120d07adb769a4f9b34f7.gif"></p> 
+         <h3>需求分析：</h3> 
+         <p>设计一个底部导航组件：</p> 
+         <ul>
+          <li>能够提供通用的API</li>
+          <li>支持text</li>
+          <li>支持Bitmap</li>
+          <li>支持自动滚动<br> 啥叫自动滚动，其实就是： <p style="text-align:center;"><img alt="" height="73" src="https://i-blog.csdnimg.cn/blog_migrate/ce5de666f0ed41283ee19d7e259fb5e1.png" width="379"></p> <p>咱们再来看一下这块的效果：</p> <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/0eae70464c721844a89b4b79e9a50e3f.gif"></p> </li>
+         </ul> 
+         <h3>疑难点分析：</h3> 
+         <p>其实也就是上面所说的点击滑动能够自动滚动以展示前后2个。</p> 
+         <h3>功能模块划分：</h3> 
+         <p>跟HiTabBottom差不多，也有几个模块，咱们来看下图：</p> 
+         <p style="text-align:center;"><img alt="" height="557" src="https://i-blog.csdnimg.cn/blog_migrate/a599d8f306c0810fc5b9561bed6f1442.png" width="501"></p> 
+         <h3>架构图：</h3> 
+         <p style="text-align:center;"><img alt="" height="429" src="https://i-blog.csdnimg.cn/blog_migrate/00ba9bcb0b8869eb750d8f092975c64f.png" width="921"></p> 
+         <p></p> 
+         <p>从上图来看，跟我们之前设计的HiTabBottom的架构差不多，也就是能复用的架构就尽量复用。&nbsp;</p> 
+         <h3>具体实现：</h3> 
+         <h4>新建top包：</h4> 
+         <p>此时则需要又打开咱们之前的hi-ui工程：</p> 
+         <p style="text-align:center;"><img alt="" height="103" src="https://i-blog.csdnimg.cn/blog_migrate/a832c80c0e6461d313355aac95150a99.png" width="256"></p> 
+         <p>这种写代码的方式得要领悟一下，也就是在多个工程中进行切换，待未来写到一定量的代码之后再回头来审视这样的写法的好处，先来新建一个top包，里面存放所有tabTop相关的代码：</p> 
+         <p style="text-align:center;"><img alt="" height="216" src="https://i-blog.csdnimg.cn/blog_migrate/99f76e109317f14b8c39f2e9e75b8cfb.png" width="231"></p> 
+         <h4>新建HiTabTopInfo实体：</h4> 
+         <p style="text-align:center;"><img alt="" height="503" src="https://i-blog.csdnimg.cn/blog_migrate/eacc4e698e3c6bba08fc4e0c199ea03f.png" width="664"></p> 
+         <p style="text-align:center;"><img alt="" height="237" src="https://i-blog.csdnimg.cn/blog_migrate/e919d5bbcee966d89b5469d75f930e3f.png" width="243"></p> 
+         <pre><code  style="height: 50vh;">package org.devio.hi.ui.tab.top;
+
+import android.graphics.Bitmap;
+
+import androidx.fragment.app.Fragment;
+
+public class HiTabTopInfo&lt;Color&gt; {
+    /* 支持两种类型，一个纯广本，一个是图片 */
+    public enum TabType {
+        BITMAP, TXT
+    }
+
+    public Class&lt;? extends Fragment&gt; fragment;
+    public String name;
+    public Bitmap defaultBitmap;
+    public Bitmap selectedBitmap;
+    public Color defaultColor;
+    public Color tintColor;
+    public TabType tabType;
+
+    public HiTabTopInfo(String name, Bitmap defaultBitmap, Bitmap selectedBitmap) {
+        this.name = name;
+        this.defaultBitmap = defaultBitmap;
+        this.selectedBitmap = selectedBitmap;
+        this.tabType = TabType.BITMAP;
+    }
+
+    public HiTabTopInfo(String name, Color defaultColor, Color tintColor) {
+        this.name = name;
+        this.defaultColor = defaultColor;
+        this.tintColor = tintColor;
+        this.tabType = TabType.TXT;
+    }
+}</code ></pre> 
+         <h4>HiTabTop单Tab封装：</h4> 
+         <p style="text-align:center;"><img alt="" height="529" src="https://i-blog.csdnimg.cn/blog_migrate/af7c415cc1a37e86491a72d370d202f4.png" width="694"></p> 
+         <p>由于这块实现逻辑跟之前的HiTabBottom差不多，就直接贴出代码了：</p> 
+         <p style="text-align:center;"><img alt="" height="266" src="https://i-blog.csdnimg.cn/blog_migrate/df4b871e22a70358b85366f751631e25.png" width="275"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.hi.ui.tab.top;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Px;
+
+import org.devio.hi.ui.R;
+import org.devio.hi.ui.tab.common.IHiTab;
+
+public class HiTabTop extends RelativeLayout implements IHiTab&lt;HiTabTopInfo&lt;?&gt;&gt; {
+    private HiTabTopInfo&lt;?&gt; tabInfo;
+    private ImageView tabImageView;
+    private TextView tabNameView;
+    private View indicator;
+
+    public HiTabTop(Context context) {
+        this(context, null);
+    }
+
+    public HiTabTop(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public HiTabTop(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        LayoutInflater.from(getContext()).inflate(R.layout.hi_tab_top, this);
+        tabImageView = findViewById(R.id.iv_image);
+        tabNameView = findViewById(R.id.tv_name);
+        indicator = findViewById(R.id.tab_top_indicator);
+    }
+
+    @Override
+    public void setHiTabInfo(@NonNull HiTabTopInfo&lt;?&gt; hiTabInfo) {
+        this.tabInfo = hiTabInfo;
+        inflateInfo(false, true);
+    }
+
+    public HiTabTopInfo&lt;?&gt; getHiTabInfo() {
+        return tabInfo;
+    }
+
+    public ImageView getTabImageView() {
+        return tabImageView;
+    }
+
+    public TextView getTabNameView() {
+        return tabNameView;
+    }
+
+    /**
+     * 改变某个tab的高度
+     *
+     * @param height
+     */
+    @Override
+    public void resetHeight(@Px int height) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        layoutParams.height = height;
+        setLayoutParams(layoutParams);
+        getTabNameView().setVisibility(View.GONE);
+    }
+
+    private void inflateInfo(boolean selected, boolean init) {
+        if (tabInfo.tabType == HiTabTopInfo.TabType.TXT) {
+            if (init) {
+                tabNameView.setVisibility(VISIBLE);
+                tabImageView.setVisibility(GONE);
+                if (!TextUtils.isEmpty(tabInfo.name)) {
+                    tabNameView.setText(tabInfo.name);
+                }
+            }
+            if (selected) {
+                indicator.setVisibility(VISIBLE);
+                tabNameView.setTextColor(getTextColor(tabInfo.tintColor));
+            } else {
+                indicator.setVisibility(GONE);
+                tabNameView.setTextColor(getTextColor(tabInfo.defaultColor));
+            }
+
+        } else if (tabInfo.tabType == HiTabTopInfo.TabType.BITMAP) {
+            if (init) {
+                tabImageView.setVisibility(VISIBLE);
+                tabNameView.setVisibility(GONE);
+            }
+            if (selected) {
+                indicator.setVisibility(VISIBLE);
+                tabImageView.setImageBitmap(tabInfo.selectedBitmap);
+            } else {
+                indicator.setVisibility(GONE);
+                tabImageView.setImageBitmap(tabInfo.defaultBitmap);
+            }
+        }
+    }
+
+    @Override
+    public void onTabSelectedChange(int index, @Nullable HiTabTopInfo&lt;?&gt; prevInfo, @NonNull HiTabTopInfo&lt;?&gt; nextInfo) {
+        if (prevInfo != tabInfo &amp;&amp; nextInfo != tabInfo || prevInfo == nextInfo) {
+            return;
+        }
+        if (prevInfo == tabInfo) {
+            inflateInfo(false, false);
+        } else {
+            inflateInfo(true, false);
+        }
+    }
+
+    @ColorInt
+    private int getTextColor(Object color) {
+        if (color instanceof String) {
+            return Color.parseColor((String) color);
+        } else {
+            return (int) color;
+        }
+    }
+}</code ></pre> 
+         <p>其中布局文件：</p> 
+         <pre><code  style="height: 50vh;" class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="8dp"
+    android:paddingRight="10dp"&gt;
+
+
+    &lt;ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:scaleType="centerInside"
+        android:visibility="gone" /&gt;
+
+
+    &lt;TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="17dp"
+        android:visibility="gone" /&gt;
+
+    &lt;View
+        android:id="@+id/tab_top_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/shape_tab_top_indicator" /&gt;
+
+&lt;/LinearLayout&gt;</code ></pre> 
+         <p>下划线是用的shape来实现的，如下：</p> 
+         <p style="text-align:center;"><img alt="" height="209" src="https://i-blog.csdnimg.cn/blog_migrate/9042b8f71d49d2ecaa5717182d11736d.png" width="574"></p> 
+         <p>color.xml：</p> 
+         <pre><code class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;color name="hi_color_bottom_line"&gt;#20ffffff&lt;/color&gt;
+    &lt;color name="hi_tabtop_normal_color"&gt;@android:color/black&lt;/color&gt;
+    &lt;color name="hi_tabtop_selected_color"&gt;@android:color/holo_red_dark&lt;/color&gt;
+    &lt;color name="hi_tabtop_line_normal_color"&gt;#00ffffff&lt;/color&gt;
+    &lt;color name="hi_tabtop_dividing_line"&gt;#e9e9e9&lt;/color&gt;
+&lt;/resources&gt;</code ></pre> 
+         <h4>HiTabLayout：</h4> 
+         <p style="text-align:center;"><img alt="" height="487" src="https://i-blog.csdnimg.cn/blog_migrate/04503ea9f7781388b3f69e907259d636.png" width="658"></p> 
+         <p>&nbsp;接下来则来实现一下，写法也跟HiTabBottom差不多：</p> 
+         <p style="text-align:center;"><img alt="" height="329" src="https://i-blog.csdnimg.cn/blog_migrate/5e0890b7d5f38ec1598dd1a26f027a8b.png" width="261"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.hi.ui.tab.top;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.devio.hi.ui.tab.common.IHiTabLayout;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Tips:
+ * 自动滚动，实现点击的位置能够自动滚动以展示前后2个
+ */
+public class HiTabTopLayout extends HorizontalScrollView implements IHiTabLayout&lt;HiTabTop, HiTabTopInfo&lt;?&gt;&gt; {
+    private List&lt;OnTabSelectedListener&lt;HiTabTopInfo&lt;?&gt;&gt;&gt; tabSelectedChangeListeners = new ArrayList&lt;&gt;();
+    private HiTabTopInfo&lt;?&gt; selectedInfo;
+    private List&lt;HiTabTopInfo&lt;?&gt;&gt; infoList;
+
+    public HiTabTopLayout(Context context) {
+        this(context, null);
+    }
+
+    public HiTabTopLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public HiTabTopLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        setVerticalScrollBarEnabled(false);//取消水平滚动条
+    }
+
+    @Override
+    public void inflateInfo(@NonNull List&lt;HiTabTopInfo&lt;?&gt;&gt; infoList) {
+        if (infoList.isEmpty()) {
+            return;
+        }
+        this.infoList = infoList;
+        LinearLayout linearLayout = getRootLayout(true);
+        selectedInfo = null;
+        //清除之前添加的HiTabTop listener，Tips：Java foreach remove问题
+        Iterator&lt;OnTabSelectedListener&lt;HiTabTopInfo&lt;?&gt;&gt;&gt; iterator = tabSelectedChangeListeners.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next() instanceof HiTabTop) {
+                iterator.remove();
+            }
+        }
+        for (int i = 0; i &lt; infoList.size(); i++) {
+            final HiTabTopInfo&lt;?&gt; info = infoList.get(i);
+            HiTabTop tab = new HiTabTop(getContext());
+            tabSelectedChangeListeners.add(tab);
+            tab.setHiTabInfo(info);
+            linearLayout.addView(tab);
+            tab.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSelected(info);
+                }
+            });
+        }
+    }
+
+
+    private LinearLayout getRootLayout(boolean clear) {
+        LinearLayout rootView = (LinearLayout) getChildAt(0);
+        if (rootView == null) {
+            rootView = new LinearLayout(getContext());
+            rootView.setOrientation(LinearLayout.HORIZONTAL);
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            addView(rootView, layoutParams);
+        } else if (clear) {
+            rootView.removeAllViews();
+        }
+        return rootView;
+    }
+
+    @Override
+    public void addTabSelectedChangeListener(OnTabSelectedListener&lt;HiTabTopInfo&lt;?&gt;&gt; listener) {
+        tabSelectedChangeListeners.add(listener);
+    }
+
+    @Nullable
+    @Override
+    public HiTabTop findTab(@NonNull HiTabTopInfo info) {
+        return null;
+    }
+
+    @Override
+    public void defaultSelected(@NonNull HiTabTopInfo defaultInfo) {
+        onSelected(defaultInfo);
+    }
+
+    private void onSelected(@NonNull HiTabTopInfo nextInfo) {
+        for (OnTabSelectedListener&lt;HiTabTopInfo&lt;?&gt;&gt; listener : tabSelectedChangeListeners) {
+            listener.onTabSelectedChange(infoList.indexOf(nextInfo), selectedInfo, nextInfo);
+        }
+        this.selectedInfo = nextInfo;
+    }
+}</code ></pre> 
+         <h4>应用：</h4> 
+         <p>这里新建一个测试Activity：</p> 
+         <p style="text-align:center;"><img alt="" height="263" src="https://i-blog.csdnimg.cn/blog_migrate/f3658876f4c865ad1ddd1b7360a45c7d.png" width="378"></p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.hi.ui.app.demo.tab;
+
+import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.devio.hi.ui.app.R;
+import org.devio.hi.ui.tab.common.IHiTabLayout;
+import org.devio.hi.ui.tab.top.HiTabTopInfo;
+import org.devio.hi.ui.tab.top.HiTabTopLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class HiTabTopDemoActivity extends AppCompatActivity {
+    String[] tabsStr = new String[]{
+            "热门",
+            "服装",
+            "数码",
+            "鞋子",
+            "零食",
+            "家电",
+            "汽车",
+            "百货",
+            "家居",
+            "装修",
+            "运动"
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_hi_tab_top_demo);
+        initTabTop();
+    }
+
+    private void initTabTop() {
+        HiTabTopLayout hiTabTopLayout = findViewById(R.id.tab_top_layout);
+        List&lt;HiTabTopInfo&lt;?&gt;&gt; infoList = new ArrayList&lt;&gt;();
+        int defaultColor = getResources().getColor(R.color.tabBottomDefaultColor);
+        int tintColor = getResources().getColor(R.color.tabBottomTintColor);
+        for (String s : tabsStr) {
+            HiTabTopInfo&lt;?&gt; info = new HiTabTopInfo&lt;Integer&gt;(s, defaultColor, tintColor);
+            infoList.add(info);
+        }
+        hiTabTopLayout.inflateInfo(infoList);
+        hiTabTopLayout.addTabSelectedChangeListener(new IHiTabLayout.OnTabSelectedListener&lt;HiTabTopInfo&lt;?&gt;&gt;() {
+            @Override
+            public void onTabSelectedChange(int index, @Nullable HiTabTopInfo&lt;?&gt; prevInfo, @NonNull HiTabTopInfo&lt;?&gt; nextInfo) {
+                Toast.makeText(HiTabTopDemoActivity.this, nextInfo.name, Toast.LENGTH_SHORT).show();
+            }
+        });
+        hiTabTopLayout.defaultSelected(infoList.get(0));
+    }
+}</code ></pre> 
+         <pre><code  style="height: 50vh;" class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".demo.tab.HiTabTopDemoActivity"&gt;
+
+    &lt;org.devio.hi.ui.tab.top.HiTabTopLayout
+        android:id="@+id/tab_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" /&gt;
+
+    &lt;View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/darker_gray"/&gt;
+&lt;/LinearLayout&gt;</code ></pre> 
+         <p>其中colors.xml中增加两个颜色：</p> 
+         <pre><code class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources&gt;
+    &lt;color name="colorPrimary"&gt;#6200EE&lt;/color&gt;
+    &lt;color name="colorPrimaryDark"&gt;#3700B3&lt;/color&gt;
+    &lt;color name="colorAccent"&gt;#03DAC5&lt;/color&gt;
+    &lt;color name="tabBottomDefaultColor"&gt;#ff656667&lt;/color&gt;
+    &lt;color name="tabBottomTintColor"&gt;#ffd44949&lt;/color&gt;
+&lt;/resources&gt;</code ></pre> 
+         <p>注意在manifest中注册一下，然后再挂到MainActivity的入口处：</p> 
+         <pre><code  style="height: 50vh;" class="language-java">package org.devio.hi.ui.app
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import org.devio.hi.ui.app.demo.tab.HiTabBottomDemoActivity
+import org.devio.hi.ui.app.demo.tab.HiTabTopDemoActivity
+
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.tv_tab_bottom -&gt; {
+                startActivity(Intent(this, HiTabBottomDemoActivity::class.java))
+            }
+            R.id.tv_tap_top -&gt; {
+                startActivity(Intent(this, HiTabTopDemoActivity::class.java))
+            }
+        }
+    }
+}</code ></pre> 
+         <pre><code  style="height: 50vh;" class="language-XML">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"&gt;
+
+    &lt;TextView
+        android:id="@+id/tv_tab_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="HiTabBottom"
+        android:textColor="#0077cc"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /&gt;
+
+    &lt;TextView
+        android:id="@+id/tv_tap_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="HiTapTop"
+        android:textColor="#0077cc"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tab_bottom" /&gt;
+
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</code ></pre> 
+         <p>运行：</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/01a475d01da4eefc8dbc7fe6566acef4.gif"></p> 
+         <h2>HiTabTop自动滚动功能实现：</h2> 
+         <p>最后还差一个点击自动滚动的处理，也就是这个库的难点之所在，下面开始一点点来实现：</p> 
+         <p style="text-align:center;"><img alt="" height="480" src="https://i-blog.csdnimg.cn/blog_migrate/84c239ca1a4dacb78a996fddbf8fa200.png" width="597"></p> 
+         <p>所以先来实现findTab()：</p> 
+         <pre><code  style="height: 50vh;" class="language-java">    @Nullable
+    @Override
+    public HiTabTop findTab(@NonNull HiTabTopInfo info) {
+        ViewGroup ll = getRootLayout(false);
+        for (int i = 0; i &lt; ll.getChildCount(); i++) {
+            View child = ll.getChildAt(i);
+            if (child instanceof HiTabTop) {
+                HiTabTop tab = (HiTabTop) child;
+                if (tab.getHiTabInfo() == info) {
+                    return tab;
+                }
+            }
+        }
+        return null;
+    }</code ></pre> 
+         <p>接下来向左滚还是向右滚，其实可以以屏幕中间为界限进行判断：</p> 
+         <p style="text-align:center;"><img alt="" height="764" src="https://i-blog.csdnimg.cn/blog_migrate/c8778508873f963a02c8163147e56fb8.png" width="346"></p> 
+         <p>所以，咱们判断一下点击的区域，怎么判断呢？如下：</p> 
+         <p style="text-align:center;"><img alt="" height="671" src="https://i-blog.csdnimg.cn/blog_migrate/d8617e04f3e246222589746cb9997bb4.png" width="683"></p> 
+         <p>接下来则需要来计算可滚动的范围了，如何计算呢？</p> 
+         <p style="text-align:center;"><img alt="" height="523" src="https://i-blog.csdnimg.cn/blog_migrate/87fe11950f6df103add74194fbe79792.png" width="588"></p> 
+         <p>所以接下来又要来实现scrollWidth方法：</p> 
+         <p style="text-align:center;"><img alt="" height="475" src="https://i-blog.csdnimg.cn/blog_migrate/532af80177ec29172b26d03a43db260d.png" width="536"></p> 
+         <p>上面的计算其实不难，这里就不过多解释了，最后再来运行看一下滚动效果是否如预期？</p> 
+         <p style="text-align:center;"><img alt="" src="https://i-blog.csdnimg.cn/blog_migrate/0f56aecd614143e60335b0a6b8fe663c.gif"></p> 
+        </div> 
+       </div> 
+       <div id="treeSkill"></div> 
+      </article>  
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://blog.csdn.net/webor2006"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/709780cd3bef4cd785a224326a14dccc_webor2006.jpg!1"> <span class="profile-name"> webor2006 </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-unbt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021Active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021Black.png" alt=""> <span id="spanCount" class="count "> 0 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUnHeart2021Active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUnHeart2021Black.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectBlack.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="1" id="get-collection"> 1 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newRewardBlack.png" alt="打赏"> <span class="count"></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newComment2021Black.png" alt=""> <span class="count"> 0 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-bar"> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newShareBlack.png" alt=""> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="11294469" data-free="false" data-description="任何梦想的达成都离不开项目的综合演练，这里则会以一个综合项目来进行架构思想的演练，为出山做准备~~" data-subscribe="true" data-title="android架构综合实操" data-img="https://img-blog.csdnimg.cn/20190927151026427.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/webor2006/category_11294469.html" data-sum="84" data-people="8" data-price="69.90" data-hotrank="0" data-status="true" data-oldprice="99.00" data-join="true" data-studyvip="true" data-studysubscribe="true" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+        <div class="tool-column"> 
+         <a class="tool-bt-button tool-unbt-subscribe" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4405&quot;,&quot;extend1&quot;:&quot;已订阅&quot;}" data-report-click="{&quot;mod&quot;:&quot;1592215036_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4405&quot;,&quot;extend1&quot;:&quot;已订阅&quot;}">已订阅</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>   
+     <a id="commentBox" name="commentBox"></a> 
+     <div id="pcCommentBox" class="comment-box comment-box-new2 login-comment-box-new" style="display:none"> 
+      <div class="has-comment" style="display:block"> 
+       <div class="one-line-box"> 
+        <div class="has-comment-tit go-side-comment"> 
+         <span class="count">0</span>&nbsp;条评论 
+        </div> 
+        <div class="has-comment-con comment-operate-item"></div> 
+        <a class="has-comment-bt-right go-side-comment focus">写评论</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="first-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/weixin_42122340/18584543" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~BlogCommendFromBaidu~Rate-1-18584543-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42122340/18584543&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/downloadType.png" alt=""> <span class="tip">下载</span> </span> 
+          <a href="https://download.csdn.net/download/weixin_42122340/18584543" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~BlogCommendFromBaidu~Rate-1-18584543-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42122340/18584543&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-18584543-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-18584543-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            hi
+            <em>ui</em>:HI
+            <em>UI</em>是足以满足前端，中端和后端的交互的实现和
+            <em>UI</em>
+            <em>设计</em>标准的解决方案
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info display-flex"> 
+           <span class="info-block">05-11</span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://download.csdn.net/download/weixin_42122340/18584543" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~BlogCommendFromBaidu~Rate-1-18584543-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42122340/18584543&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-18584543-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-18584543-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           惠 | HI
+           <em>UI</em>是足以满足前端，中端和后端的交互和
+           <em>UI</em>
+           <em>设计</em>标准的制定和实施的解决方案。 特征 高度降低用户对交互成本和交互可预测性的了解 建立出色的虚拟风格，并获得针对典型场景的虚拟
+           <em>设计</em>和接口规范 在OA，仓储和售后系统，BI系统以及公司中间站项目中具有高度完善的
+           <em>设计</em>经验 安装 npm install @hi-
+           <em>ui</em>/hi
+           <em>ui</em> 有关
+           <em>组件</em>的用法，请参见更多。 贡献 结构 . ├── b
+           <em>ui</em>ld # b
+           <em>ui</em>ld command ├── components # component source ├── docs # markdown docs │&nbsp;&nbsp; ├── en-US │&nbsp;&nbsp; └── zh-CN ├── libs # third-party libra
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>  
+     <div class="second-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/gitblog_00511/article/details/140977288" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-140977288-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00511/article/details/140977288&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/gitblog_00511/article/details/140977288" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-140977288-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00511/article/details/140977288&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-140977288-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-140977288-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            HI
+            <em>UI</em> 
+            <em>组件</em>库使用教程
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/gitblog_00511" target="_blank"><span class="blog-title">gitblog_00511的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">08-07</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 824 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/gitblog_00511/article/details/140977288" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-140977288-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00511/article/details/140977288&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-140977288-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1-140977288-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           HI
+           <em>UI</em> 
+           <em>组件</em>库使用教程 hi
+           <em>ui</em>HI
+           <em>UI</em> is a solution that is adequate for the fomulation and implementation of interaction and 
+           <em>UI</em> design standard for front, middle and backend.项目地址:https://gitcode.com/gh_mirrors/hi/h...
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="recommend-box insert-baidu-box  recommend-highlight-default"> 
+      <div class="recommend-item-box no-index" style="display:none"></div> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/gitblog_00546/article/details/140978953" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-140978953-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00546/article/details/140978953&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/gitblog_00546/article/details/140978953" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-140978953-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00546/article/details/140978953&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-140978953-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-140978953-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            Hi
+            <em>UI</em>: 
+            <em>打造</em>高效中后台系统的新宠儿
+           </div> 
+           <div class="tag">
+            最新发布
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/gitblog_00546" target="_blank"><span class="blog-title">gitblog_00546的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">08-07</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 962 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/gitblog_00546/article/details/140978953" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-2-140978953-blog-119793166.235^v43^pc_blog_bottom_relevance_base7\&quot;,\&quot;dist_request_id\&quot;:\&quot;1727166907846_59505\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1727166907846_59505&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~BlogCommendFromBaidu~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/gitblog_00546/article/details/140978953&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-140978953-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-2-140978953-blog-119793166.235%5Ev43%5Epc_blog_bottom_relevance_base7"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           Hi
+           <em>UI</em>: 
+           <em>打造</em>高效中后台系统的新宠儿 hi
+           <em>ui</em>HI
+           <em>UI</em> is a solution that is adequate for the fomulation and implementation of interaction and 
+           <em>UI</em> design standard for front, middle and backend.项目地址:https://gitcode.com/gh_mirro...
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="blog-footer-bottom" style="margin-top:10px;"></div>   
+    </main> 
+    <aside class="blog_container_aside"> 
+     <div id="asideProfile" class="aside-box"> 
+      <div class="profile-intro d-flex"> 
+       <div class="avatar-box d-flex justify-content-center flex-column"> 
+        <a href="https://blog.csdn.net/webor2006" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4121&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/709780cd3bef4cd785a224326a14dccc_webor2006.jpg!1" class="avatar_pic"> </a> 
+       </div> 
+       <div class="user-info d-flex flex-column profile-intro-name-box"> 
+        <div class="profile-intro-name-boxTop"> 
+         <a href="https://blog.csdn.net/webor2006" target="_blank" class="" id="uid" title="webor2006" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4122&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006&quot;,&quot;ab&quot;:&quot;new&quot;}"> <span class="name " username="webor2006">webor2006</span> </a> 
+         <span> </span> 
+         <span class="flag expert-blog"> <span class="bubble">CSDN认证博客专家</span> </span> 
+         <span class="flag company-blog"> <span class="bubble">CSDN认证企业博客</span> </span> 
+        </div> 
+        <div class="profile-intro-name-boxFooter"> 
+         <span class="personal-home-page personal-home-years" title="已加入 CSDN 17年">码龄17年</span> 
+         <span class="personal-home-page"> <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证"> <img src="https://csdnimg.cn/identity/nocErtification.png" alt=""> 暂无认证 </a> </span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="811"> 
+        <a href="https://blog.csdn.net/webor2006" data-report-click="{&quot;mod&quot;:&quot;1598321000_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4310&quot;}" data-report-query="t=1"> 
+         <dt>
+          <span class="count">811</span>
+         </dt> 
+         <dd class="font">
+          原创
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" data-report-click="{&quot;mod&quot;:&quot;1598321000_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4311&quot;}" title="18713"> 
+        <a href="https://blog.csdn.net/rank/list/weekly" target="_blank"> 
+         <dt>
+          <span class="count">1万+</span>
+         </dt> 
+         <dd class="font">
+          周排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" title="3744"> 
+        <a href="https://blog.csdn.net/rank/list/total" data-report-click="{&quot;mod&quot;:&quot;1598321000_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4312&quot;}" target="_blank"> 
+         <dt>
+          <span class="count">3744</span>
+         </dt> 
+         <dd class="font">
+          总排名
+         </dd> </a> 
+       </dl> 
+       <dl class="text-center" style="min-width:58px" title="357149"> 
+        <dt>
+         <span class="count">35万+</span>
+        </dt> 
+        <dd>
+         访问
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="6级,点击查看等级说明"> 
+        <dt>
+         <a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank"> <img class="level" src="https://csdnimg.cn/identity/blog6.png"> </a> 
+        </dt> 
+        <dd>
+         等级
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="item-rank"></div> 
+      <div class="data-info d-flex item-tiling"> 
+       <dl class="text-center" title="8806"> 
+        <dt>
+         <span class="count">8806</span>
+        </dt> 
+        <dd>
+         积分
+        </dd> 
+       </dl> 
+       <dl class="text-center" id="fanBox" title="2735"> 
+        <dt>
+         <span class="count" id="fan">2735</span>
+        </dt> 
+        <dd>
+         粉丝
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="582"> 
+        <dt>
+         <span class="count">582</span>
+        </dt> 
+        <dd>
+         获赞
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="85"> 
+        <dt>
+         <span class="count">85</span>
+        </dt> 
+        <dd>
+         评论
+        </dd> 
+       </dl> 
+       <dl class="text-center" title="1899"> 
+        <dt>
+         <span class="count">1899</span>
+        </dt> 
+        <dd>
+         收藏
+        </dd> 
+       </dl> 
+      </div> 
+      <div class="aside-box-footer" data-report-view="{&quot;spm&quot;:&quot;3001.4296&quot;}"> 
+       <div class="badge-box d-flex"> 
+        <div class="badge d-flex"> 
+         <div class="icon-badge" title="持续创作"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/chizhiyiheng@240.png" alt="持续创作"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="笔耕不辍"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/02d34b42a3ee476fb50850304ab67017.png" alt="笔耕不辍"> 
+          </div> 
+         </div> 
+         <div class="icon-badge" title="创作能手"> 
+          <div class="mouse-box"> 
+           <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="https://csdnimg.cn/medal/qixiebiaobing4@240.png" alt="创作能手"> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="profile-intro-name-boxOpration"> 
+       <div class="opt-letter-watch-box"> 
+        <a rel="noopener" class="bt-button personal-letter" href="https://im.csdn.net/chat/webor2006" target="_blank">私信</a> 
+       </div> 
+       <div class="opt-letter-watch-box"> 
+        <a class="attented personal-watch bt-button" id="btnAttent">已关注</a> 
+       </div> 
+      </div> 
+     </div> 
+     <a id="remuneration" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9809&quot;}" rel="nofollow" href="" class="remuneration-box"> <img src="" alt=""> </a> 
+     <div id="asideWriteGuide" class="aside-box side-write-guide-box type-1" data-report-view="{&quot;spm&quot;:&quot;3001.9727&quot;}"> 
+      <div class="content-box"> 
+       <a rel="nofollow" href="https://mp.csdn.net" target="_blank" class="btn-go-write" data-report-query="spm=3001.9727" data-report-click="{&quot;spm&quot;:&quot;3001.9727&quot;}"> <img src="https://img-home.csdnimg.cn/images/20240218021837.png" alt="写文章"> </a> 
+      </div> 
+     </div> 
+     <div id="asideSearchArticle" class="aside-box"> 
+      <div class="aside-content search-comter"> 
+       <div class="aside-search aside-search-blog"> 
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章"> 
+        <a class="btn-search-blog" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9182&quot;}"> <img src="https://csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042"> </a> 
+       </div> 
+      </div> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">热门文章</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/webor2006/article/details/120909642" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120909642&quot;,&quot;ab&quot;:&quot;new&quot;}"> 线性代数学习之特征值与特征向量 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">59941</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/webor2006/article/details/120087099" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120087099&quot;,&quot;ab&quot;:&quot;new&quot;}"> 线性代数学习之行列式 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">14641</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/webor2006/article/details/119747128" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119747128&quot;,&quot;ab&quot;:&quot;new&quot;}"> 线性代数学习之向量空间，维度，和四大子空间 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">13207</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/webor2006/article/details/119747383" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119747383&quot;,&quot;ab&quot;:&quot;new&quot;}"> 线性代数学习之初等矩阵和矩阵的可逆性 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">10121</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/webor2006/article/details/120159856" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120159856&quot;,&quot;ab&quot;:&quot;new&quot;}"> 线性代数学习之正交性，标准正交矩阵和投影 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">9388</span> </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideCategory" class="aside-box flexible-box"> 
+      <h3 class="aside-title">分类专栏</h3> 
+      <div class="aside-content"> 
+       <ul> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294469.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294469.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151026427.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android架构综合实操 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">84篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11308770.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11308770.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 鸿蒙应用开发(2) </span> </a> <span class="special-column-num">9篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_12213500.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_12213500.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> java后端开发 </span> </a> <span class="special-column-num">13篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11518361.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11518361.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151053287.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Java后台到全栈 </span> </a> <span class="special-column-num">8篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11965792.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11965792.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/748d60f5cb2d4ec2b43d68fbfb844b9a.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Android全面攻破技术疑难及面试痛点 </span> </a> <span class="special-column-num">2篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11927603.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11927603.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/9d49f76922304c809374acf97a0a3c57.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 高等数学系统学习 </span> </a> <span class="special-column-num">7篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294467.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294467.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android应用开发 </span> </a> <span class="special-column-num">7篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294464.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294464.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android之UI效果研究 </span> </a> <span class="special-column-num">32篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11317422.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11317422.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> IOS入门到放弃 </span> </a> <span class="special-column-num">9篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11418219.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11418219.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Kotlin项目实战 </span> </a> <span class="special-column-num">10篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11293875.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11293875.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 算法与数据结构体系学习 </span> </a> <span class="special-column-num">10篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11307649.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11307649.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Python量化交易系统实战 </span> </a> <span class="special-column-num">4篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11293893.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11293893.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 线性代数系统学习 </span> </a> <span class="special-column-num">13篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11370606.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11370606.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> flutter项目实战 </span> </a> <span class="special-column-num">8篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310151.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310151.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> java并发编程 </span> </a> <span class="special-column-num">64篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11340562.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11340562.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> ReactNative </span> </a> <span class="special-column-num">7篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11372955.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11372955.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> flutter学习 </span> </a> <span class="special-column-num">16篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327838.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327838.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Android RxJava </span> </a> <span class="special-column-num">4篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327845.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327845.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android NDK开发 </span> </a> <span class="special-column-num">11篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327873.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327873.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android基础巩固 </span> </a> <span class="special-column-num">8篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327887.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327887.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android面试题集 </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11323405.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11323405.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 数据算法研究 </span> </a> <span class="special-column-num">35篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11323390.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11323390.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/2019092715111047.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> c研究 </span> </a> <span class="special-column-num">55篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11315648.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11315648.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 从java到Kotlin </span> </a> <span class="special-column-num">79篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310859.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310859.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> JVM深入学习 </span> </a> <span class="special-column-num">87篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310751.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310751.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Java8 </span> </a> <span class="special-column-num">36篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294457.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294457.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151117521.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 程序员英语 </span> </a> <span class="special-column-num">2篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294458.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294458.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 微信小程序开发入门 </span> </a> <span class="special-column-num">2篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294462.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294462.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android架构基石 </span> </a> <span class="special-column-num">42篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294466.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294466.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> android游戏开发 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294461.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294461.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 设计模式研究 </span> </a> <span class="special-column-num">1篇</span> </li> 
+       </ul> 
+      </div> 
+      <p class="text-center"> <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a> </p> 
+     </div> 
+     <div id="asideNewComments" class="aside-box"> 
+      <h3 class="aside-title">最新评论</h3> 
+      <div class="aside-content"> 
+       <ul class="newcomment-list"> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/webor2006/article/details/119771581#comments_34103669" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119771581#comments_34103669&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119771581#comments_34103669&quot;,&quot;ab&quot;:&quot;new&quot;}">Kotlin x Java打造 UI 通用组件＜二＞-------通用UI组件开发与基础框架设计一</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/the_shy_faker" class="user-name" target="_blank">Jzin: </a> <span class="code-comments">求 移动端架构师 imooc 慕课，阶段一 第二周 第二章 HiTabBottom架构设计的2-1视频</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/webor2006/article/details/120909642#comments_33780704" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120909642#comments_33780704&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120909642#comments_33780704&quot;,&quot;ab&quot;:&quot;new&quot;}">线性代数学习之特征值与特征向量</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/Checo_0x" class="user-name" target="_blank">Checo_0x: </a> <span class="code-comments">中间行列式计算是不是有错误？</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/webor2006/article/details/120160023#comments_32245420" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120160023#comments_32245420&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/120160023#comments_32245420&quot;,&quot;ab&quot;:&quot;new&quot;}">线性代数学习之坐标转换和线性变换</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/m0_56640275" class="user-name" target="_blank">Golden Bexby: </a> <span class="code-comments">线性变换那块，比如说关于x轴翻转，那么是不是默认了变换前后两个向量在这两组基表示的坐标都是一样的，这样才能从变换后的基的坐标求出标准坐标系下的坐标？</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/webor2006/article/details/119747377#comments_32225364" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119747377#comments_32225364&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/119747377#comments_32225364&quot;,&quot;ab&quot;:&quot;new&quot;}">线性代数学习之线性系统</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/m0_56640275" class="user-name" target="_blank">Golden Bexby: </a> <span class="code-comments">写的非常通俗易懂，理解也非常透彻，如获至宝。要是早点看到就好了</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/webor2006/article/details/129239707#comments_30973334" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/129239707#comments_30973334&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/129239707#comments_30973334&quot;,&quot;ab&quot;:&quot;new&quot;}">Spring Boot + Vue3 前后端分离 实战 wiki 知识库系统＜二＞---后端架构完善与接口开发</a> <p class="comment ellipsis"> <a href="https://blog.csdn.net/m0_50497866" class="user-name" target="_blank">m0_50497866: </a> <span class="code-comments">mysql的文章看不了了 要密码<img src="https://g.csdnimg.cn/static/face/emoji/010.png" alt="表情包"></span> </p> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideArchive" class="aside-box" style="display:block!important; width:300px;"> 
+      <h3 class="aside-title">最新文章</h3> 
+      <div class="aside-content"> 
+       <ul class="inf_list clearfix"> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/webor2006/article/details/142032658" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/142032658&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/142032658&quot;,&quot;ab&quot;:&quot;new&quot;}">零基础快速上手HarmonyOS ArkTS开发5---从简单的页面开始2---使用List组件构建列表、Grid组件构建网格布局</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/webor2006/article/details/140073240" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/140073240&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/140073240&quot;,&quot;ab&quot;:&quot;new&quot;}">零基础快速上手HarmonyOS ArkTS开发4---从简单的页面开始</a> </li> 
+        <li class="clearfix"> <a href="https://blog.csdn.net/webor2006/article/details/139456321" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/139456321&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/article/details/139456321&quot;,&quot;ab&quot;:&quot;new&quot;}">前后端接口设计与配置中心系统＜二十六＞-------后端-DAU超千万的移动端接口设计实现3【用户列表API开发与分页功能实现、用户管理API的设计与实现、商品类别模块建模与功能开发、商品类别管理】</a> </li> 
+       </ul> 
+       <div class="archive-bar"></div> 
+       <div class="archive-box"> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2024&amp;month=09" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2024&amp;month=09&quot;}"><span class="year">2024年</span><span class="num">4篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2023&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2023&amp;month=12&quot;}"><span class="year">2023年</span><span class="num">17篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2022&amp;month=09" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2022&amp;month=09&quot;}"><span class="year">2022年</span><span class="num">35篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2021&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2021&amp;month=12&quot;}"><span class="year">2021年</span><span class="num">148篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2020&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2020&amp;month=12&quot;}"><span class="year">2020年</span><span class="num">92篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2019&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2019&amp;month=12&quot;}"><span class="year">2019年</span><span class="num">154篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2018&amp;month=11" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2018&amp;month=11&quot;}"><span class="year">2018年</span><span class="num">162篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2017&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2017&amp;month=12&quot;}"><span class="year">2017年</span><span class="num">83篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2016&amp;month=10" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2016&amp;month=10&quot;}"><span class="year">2016年</span><span class="num">16篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2015&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2015&amp;month=12&quot;}"><span class="year">2015年</span><span class="num">31篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2014&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2014&amp;month=12&quot;}"><span class="year">2014年</span><span class="num">49篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2013&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2013&amp;month=12&quot;}"><span class="year">2013年</span><span class="num">19篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://blog.csdn.net/webor2006?type=blog&amp;year=2011&amp;month=09" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006?type=blog&amp;year=2011&amp;month=09&quot;}"><span class="year">2011年</span><span class="num">1篇</span></a>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 详情页显示目录 --> 
+     <!--文章目录--> 
+     <div id="asidedirectory" class="aside-box"> 
+      <div class="groupfile" id="directory"> 
+       <h3 class="aside-title">目录</h3> 
+       <div class="align-items-stretch group_item"> 
+        <div class="pos-box"> 
+         <div class="scroll-box"> 
+          <div class="toc-box"></div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside>    
+   </div> 
+   <div class="recommend-right align-items-stretch clearfix" id="rightAside" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right"> 
+      <div class="flex-column aside-box groupfile" id="groupfile"> 
+       <div class="groupfile-div"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="aside-box kind_person d-flex flex-column"> 
+       <h3 class="aside-title">分类专栏</h3> 
+       <div class="align-items-stretch kindof_item" id="kind_person_column"> 
+        <div class="aside-content"> 
+         <ul> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294469.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294469.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151026427.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android架构综合实操 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">84篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11308770.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11308770.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 鸿蒙应用开发(2) </span> </a> <span class="special-column-num">9篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_12213500.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_12213500.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> java后端开发 </span> </a> <span class="special-column-num">13篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11518361.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11518361.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151053287.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Java后台到全栈 </span> </a> <span class="special-column-num">8篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11965792.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11965792.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/748d60f5cb2d4ec2b43d68fbfb844b9a.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Android全面攻破技术疑难及面试痛点 </span> </a> <span class="special-column-num">2篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11927603.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11927603.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/9d49f76922304c809374acf97a0a3c57.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 高等数学系统学习 </span> </a> <span class="special-column-num">7篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294467.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294467.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android应用开发 </span> </a> <span class="special-column-num">7篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294464.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294464.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android之UI效果研究 </span> </a> <span class="special-column-num">32篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11317422.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11317422.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> IOS入门到放弃 </span> </a> <span class="special-column-num">9篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11418219.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11418219.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Kotlin项目实战 </span> </a> <span class="special-column-num">10篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11293875.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11293875.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 算法与数据结构体系学习 </span> </a> <span class="special-column-num">10篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11307649.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11307649.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Python量化交易系统实战 </span> </a> <span class="special-column-num">4篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11293893.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11293893.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 线性代数系统学习 </span> </a> <span class="special-column-num">13篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11370606.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11370606.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> flutter项目实战 </span> </a> <span class="special-column-num">8篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310151.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310151.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> java并发编程 </span> </a> <span class="special-column-num">64篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11340562.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11340562.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> ReactNative </span> </a> <span class="special-column-num">7篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11372955.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11372955.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> flutter学习 </span> </a> <span class="special-column-num">16篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327838.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327838.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Android RxJava </span> </a> <span class="special-column-num">4篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327845.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327845.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android NDK开发 </span> </a> <span class="special-column-num">11篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327873.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327873.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android基础巩固 </span> </a> <span class="special-column-num">8篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11327887.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11327887.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android面试题集 </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11323405.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11323405.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 数据算法研究 </span> </a> <span class="special-column-num">35篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11323390.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11323390.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/2019092715111047.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> c研究 </span> </a> <span class="special-column-num">55篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11315648.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11315648.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 从java到Kotlin </span> </a> <span class="special-column-num">79篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310859.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310859.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> JVM深入学习 </span> </a> <span class="special-column-num">87篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11310751.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11310751.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Java8 </span> </a> <span class="special-column-num">36篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294457.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294457.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20190927151117521.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 程序员英语 </span> </a> <span class="special-column-num">2篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294458.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294458.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 微信小程序开发入门 </span> </a> <span class="special-column-num">2篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294462.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294462.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android架构基石 </span> </a> <span class="special-column-num">42篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294466.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294466.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> android游戏开发 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/webor2006/category_11294461.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006/category_11294461.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 设计模式研究 </span> </a> <span class="special-column-num">1篇</span> </li> 
+         </ul> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div class="comment-side-box-shadow comment-side-tit-close" id="commentSideBoxshadow"> 
+   <div class="comment-side-content"> 
+    <div class="comment-side-tit"> 
+     <span class="comment-side-tit-count">评论</span> 
+     <img class="comment-side-tit-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png">
+    </div> 
+    <div id="pcCommentSideBox" class="comment-box comment-box-new2 " style="display:block"> 
+     <div class="comment-edit-box d-flex"> 
+      <div class="user-img"> 
+       <a href="https://blog.csdn.net/2401_87203798" target="_blank"> <img src="https://profile-avatar.csdnimg.cn/default.jpg!1"> </a> 
+      </div> 
+      <form id="commentform"> 
+       <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="欢迎高质量的评论，低质的评论会被折叠" maxlength="1000"></textarea> 
+       <div class="comment-reward-box" style="background-image: url('https://img-home.csdnimg.cn/images/20230131025301.png');"> 
+        <a class="btn-remove-reward"></a> 
+        <div class="form-reward-box"> 
+         <div class="info">
+           成就一亿技术人! 
+         </div> 
+         <div class="price-info">
+           拼手气红包
+          <span class="price">6.0元</span> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="comment-operate-box"> 
+        <div class="comment-operate-l"> 
+         <span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span> 
+        </div> 
+        <div class="comment-operate-c">
+          &nbsp; 
+        </div> 
+        <div class="comment-operate-r"> 
+         <div class="comment-operate-item comment-reward"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentReward.png" alt="红包"> 
+          <span class="comment-operate-tip">添加红包</span> 
+         </div> 
+         <div class="comment-operate-item comment-emoticon"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentEmotionIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">插入表情</span> 
+          <div class="comment-emoticon-box comment-operate-isshow"> 
+           <div class="comment-emoticon-img-box"></div> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item comment-code"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentCodeIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">代码片</span> 
+          <div class="comment-code-box comment-operate-isshow"> 
+           <ul id="commentCode"> 
+            <li><a data-code="html">HTML/XML</a></li> 
+            <li><a data-code="objc">objective-c</a></li> 
+            <li><a data-code="ruby">Ruby</a></li> 
+            <li><a data-code="php">PHP</a></li> 
+            <li><a data-code="csharp">C</a></li> 
+            <li><a data-code="cpp">C++</a></li> 
+            <li><a data-code="javascript">JavaScript</a></li> 
+            <li><a data-code="python">Python</a></li> 
+            <li><a data-code="java">Java</a></li> 
+            <li><a data-code="css">CSS</a></li> 
+            <li><a data-code="sql">SQL</a></li> 
+            <li><a data-code="plain">其它</a></li> 
+           </ul> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item"> 
+          <input type="hidden" id="comment_replyId" name="comment_replyId"> 
+          <input type="hidden" id="article_id" name="article_id" value="119793166"> 
+          <input type="hidden" id="comment_userId" name="comment_userId" value=""> 
+          <input type="hidden" id="commentId" name="commentId" value=""> 
+          <a data-report-click="{&quot;mod&quot;:&quot;1582594662_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4227&quot;,&quot;ab&quot;:&quot;new&quot;}"> <input type="submit" class="btn-comment btn-comment-input" value="评论"> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </form> 
+     </div> 
+     <div class="comment-list-container"> 
+      <div class="comment-list-box comment-operate-item"> 
+      </div> 
+      <div id="lookFlodComment" class="look-flod-comment"> 
+       <span class="count"></span>&nbsp;条评论被折叠&nbsp;
+       <a class="look-more-flodcomment">查看</a> 
+      </div> 
+      <div class="opt-box text-center"> 
+       <div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div> 
+      </div> 
+     </div> 
+    </div> 
+    <div id="pcFlodCommentSideBox" class="pc-flodcomment-sidebox"> 
+     <div class="comment-fold-tit">
+      <span id="lookUnFlodComment" class="back"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png" alt=""></span>被折叠的&nbsp;
+      <span class="count"></span>&nbsp;条评论 
+      <a href="https://blogdev.blog.csdn.net/article/details/122245662" class="tip" target="_blank">为什么被折叠?</a> 
+      <a href="https://bbs.csdn.net/forums/FreeZone" class="park" target="_blank"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png">到【灌水乐园】发言</a> 
+     </div> 
+     <div class="comment-fold-content"></div> 
+     <div id="lookBadComment" class="look-bad-comment side-look-comment"> 
+      <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="comment-rewarddialog-box"> 
+    <div class="form-box"> 
+     <div class="title-box">
+       添加红包 
+      <a class="btn-form-close"></a> 
+     </div> 
+     <form id="commentRewardForm"> 
+      <div class="ipt-box"> 
+       <label for="txtName">祝福语</label> 
+       <div class="ipt-btn-box"> 
+        <input type="text" name="name" id="txtName" autocomplete="off" maxlength="50"> 
+        <a class="btn-ipt btn-random"></a> 
+       </div> 
+       <p class="notice">请填写红包祝福语或标题</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtSendAmount">红包数量</label> 
+       <div class="ipt-txt-box"> 
+        <input type="text" name="sendAmount" maxlength="4" id="txtSendAmount" placeholder="请填写红包数量(最小10个)" autocomplete="off"> 
+        <span class="after-txt">个</span> 
+       </div> 
+       <p class="notice">红包个数最小为10个</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtMoney">红包总金额</label> 
+       <div class="ipt-txt-box error"> 
+        <input type="text" name="money" maxlength="5" id="txtMoney" placeholder="请填写总金额(最低5元)" autocomplete="off"> 
+        <span class="after-txt">元</span> 
+       </div> 
+       <p class="notice">红包金额最低5元</p> 
+      </div> 
+      <div class="balance-info-box"> 
+       <label>余额支付</label> 
+       <div class="balance-info">
+         当前余额
+        <span class="balance">3.43</span>元 
+        <a href="https://i.csdn.net/#/wallet/balance/recharge" class="link-charge" target="_blank">前往充值 &gt;</a> 
+       </div> 
+      </div> 
+      <div class="opt-box"> 
+       <div class="pay-info">
+         需支付：
+        <span class="price">10.00</span>元 
+       </div> 
+       <button type="button" class="ml-auto btn-cancel">取消</button> 
+       <button type="button" class="ml8 btn-submit" disabled="true">确定</button> 
+      </div> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="rr-guide-box"> 
+    <div class="rr-first-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png" alt=""> 
+     <button class="btn-guide-known next">下一步</button> 
+    </div> 
+    <div class="rr-second-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png" alt=""> 
+     <button class="btn-guide-known known">知道了</button> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="redEnvolope" id="redEnvolope"> 
+   <div class="env-box"> 
+    <div class="env-container"> 
+     <div class="pre-open" id="preOpen"> 
+      <div class="top"> 
+       <header> 
+        <img class="clearTpaErr" :src="redpacketAuthor.avatar" alt=""> 
+        <div class="author">
+         成就一亿技术人!
+        </div> 
+       </header> 
+       <div class="bot-icon"></div> 
+      </div> 
+      <footer> 
+       <div class="red-openbtn open-start"></div> 
+       <div class="tip">
+         领取后你会自动成为博主和红包主的粉丝 
+        <a class="rule" target="_blank">规则</a> 
+       </div> 
+      </footer> 
+     </div> 
+     <div class="opened" id="opened"> 
+      <div class="bot-icon"> 
+       <header> 
+        <a class="creatorUrl" href="" target="_blank"> <img class="clearTpaErr" src="https://profile-avatar.csdnimg.cn/default.jpg!2" alt=""> </a> 
+        <div class="author"> 
+         <div class="tt">
+          hope_wisdom
+         </div> 发出的红包 
+        </div> 
+       </header> 
+      </div> 
+      <div class="receive-box"> 
+       <header></header> 
+       <div class="receive-list"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="close-btn"></div> 
+   </div> 
+  </div> 
+  <div id="rewardNew" class="reward-popupbox-new"> 
+   <p class="rewad-title">打赏作者<span class="reward-close"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png"></span></p> 
+   <dl class="profile-box"> 
+    <dd> 
+     <a href="https://blog.csdn.net/webor2006" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/webor2006&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/709780cd3bef4cd785a224326a14dccc_webor2006.jpg!1" class="avatar_pic"> </a> 
+    </dd> 
+    <dt> 
+     <p class="blog-name">webor2006</p> 
+     <p class="blog-discript">你的鼓励将是我创作的最大动力</p> 
+    </dt> 
+   </dl> 
+   <div class="reward-box-new"> 
+    <div class="reward-content">
+     <div class="reward-right"></div>
+    </div> 
+   </div> 
+   <div class="money-box"> 
+    <span class="choose-money choosed" data-id="1">¥1</span> 
+    <span class="choose-money " data-id="2">¥2</span> 
+    <span class="choose-money " data-id="4">¥4</span> 
+    <span class="choose-money " data-id="6">¥6</span> 
+    <span class="choose-money " data-id="10">¥10</span> 
+    <span class="choose-money " data-id="20">¥20</span> 
+   </div> 
+   <div class="sure-box"> 
+    <div class="sure-box-money"> 
+     <div class="code-box"> 
+      <div class="code-num-box"> 
+       <span class="code-name">扫码支付：</span>
+       <span class="code-num">¥1</span> 
+      </div> 
+      <div class="code-img-box"> 
+       <div class="renovate"> 
+        <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+        <span>获取中</span> 
+       </div> 
+      </div> 
+      <div class="code-pay-box"> 
+       <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newWeiXin.png" alt=""> 
+       <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newZhiFuBao.png" alt=""> 
+       <span>扫码支付</span> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="sure-box-blance"> 
+     <p class="tip">您的余额不足，请更换扫码支付或<a target="_blank" data-report-click="{&quot;mod&quot;:&quot;1597646289_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4302&quot;}" href="https://i.csdn.net/#/wallet/balance/recharge?utm_source=RewardVip" class="go-invest">充值</a></p> 
+     <p class="is-have-money"><a class="reward-sure">打赏作者</a></p> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="pay-code"> 
+   <div class="pay-money">
+    实付
+    <span class="pay-money-span" data-nowprice="" data-oldprice="">元</span>
+   </div> 
+   <div class="content-blance">
+    <a class="blance-bt" href="javascript:;">使用余额支付</a>
+   </div> 
+   <div class="content-code"> 
+    <div id="payCode" data-id=""> 
+     <div class="renovate"> 
+      <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+      <span>点击重新获取</span> 
+     </div> 
+    </div> 
+    <div class="pay-style">
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span>
+     <span class="text">扫码支付</span>
+    </div> 
+   </div> 
+   <div class="bt-close"> 
+    <svg t="1567152543821" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"> 
+     <defs> 
+      <style type="text/css"></style> 
+     </defs> 
+     <path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path> 
+    </svg> 
+   </div> 
+   <div class="pay-balance"> 
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span> 
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span> 
+    <div class="pay-code-tile"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt=""> 
+     <div class="pay-code-content"> 
+      <div class="span"> 
+       <p class="title">抵扣说明：</p> 
+       <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。</p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span>余额充值</span></a> 
+  </div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div>  
+  <!-- 富文本柱状图  --> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css">                  
+ </body>
+</html>
